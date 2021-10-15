@@ -1,0 +1,35 @@
+name: 'Run instrumentation tests'
+author: 'emulator.wtf'
+description: 'Run tests with emulator.wtf'
+inputs:
+  api-token:
+    description: 'Api token for emulator.wtf'
+    required: true
+  app-apk:
+    description: 'Application apk file'
+    required: true
+  test-apk:
+    description: 'Test apk file'
+    required: true
+  test-results:
+    description: 'Location to store results in'
+    required: false
+branding:
+  color: orange
+  icon: smartphone
+runs:
+  using: composite
+  steps:
+    - name: "Download ew-cli"
+      shell: bash
+      run: |
+        mkdir -p $HOME/bin && \
+        curl https://maven.emulator.wtf/releases/ew-cli -o $HOME/bin/ew-cli && \
+          chmod a+x $HOME/bin/ew-cli
+    - name: "Run tests"
+      shell: bash
+      env:
+        EW_API_TOKEN: ${{ inputs.api-token }}
+      run:
+        $HOME/bin/ew-cli --app ${{ inputs.app-apk }} --test ${{ inputs.test-apk }} \
+          $([[ ! -z "${{ inputs.test-results }}" ]] && echo "--results-results ${{ inputs.test-results }}")
