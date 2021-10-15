@@ -31,5 +31,4 @@ runs:
       env:
         EW_API_TOKEN: ${{ inputs.api-token }}
       run:
-        $HOME/bin/ew-cli --app ${{ inputs.app-apk }} --test ${{ inputs.test-apk }} \
-          $([[ ! -z "${{ inputs.test-results }}" ]] && echo "--results-results ${{ inputs.test-results }}")
+        $HOME/bin/ew-cli --app ${{ inputs.app-apk }} --test ${{ inputs.test-apk }}
