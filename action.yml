@@ -48,12 +48,12 @@ branding:
 runs:
   using: composite
   steps:
-    - name: "Setup ew-cli"
-      using: 'emulator-wtf/setup-ew-cli@master'
+    - name: Setup ew-cli
+      using: emulator-wtf/setup-ew-cli@master
       with:
         version: ${{ inputs.version }}
-    - name: "Run instrumented tests"
-      using: 'emulator-wtf/invoke@master'
+    - name: Run instrumented tests
+      uses: emulator-wtf/invoke@master
       with:
         api-token: ${{ inputs.api-token }}
         app-apk: ${{ inputs.app-apk }}
