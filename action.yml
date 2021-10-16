@@ -2,6 +2,10 @@ name: 'Run instrumentation tests'
 author: 'emulator.wtf'
 description: 'Run tests with emulator.wtf'
 inputs:
+  version:
+    description: 'ew-cli verison to use'
+    required: true
+    default: '0.0.23'
   api-token:
     description: 'Api token for emulator.wtf'
     required: true
@@ -11,8 +15,32 @@ inputs:
   test-apk:
     description: 'Test apk file'
     required: true
-  test-results:
-    description: 'Location to store results in'
+  outputs-dir:
+    description: 'Location to store test outputs in'
+    required: false
+  devices:
+    description: 'Device configurations to use, in the form of model=X,version=Y per line'
+    required: false
+  use-orchestrator:
+    description: 'Set to true to use the Android Test Orchestrator'
+    required: false
+  clear-package-data:
+    description: 'Set to true to clear app data between every test (only works with orchestrator)'
+    required: false
+  with-coverage:
+    description: 'Set to true to collect coverage files and save them to <outputs-dir>'
+    required: false
+  additional-apks:
+    description: 'Additional apks to install, one per line'
+    required: false
+  environment-variables:
+    description: 'Environment variables to pass to AndroidJUnitTestRunner, one per line in the form of key=value'
+    required: false
+  num-uniform-shards:
+    description: 'Set to a number larger than 1 to randomly split your tests into multiple shards.'
+    required: false
+  directories-to-pull:
+    description: 'Directories to pull from device and store in <outputs-dir>, one per line'
     required: false
 branding:
   color: orange
@@ -20,15 +48,22 @@ branding:
 runs:
   using: composite
   steps:
-    - name: "Download ew-cli"
-      shell: bash
-      run: |
-        mkdir -p $HOME/bin && \
-        curl https://maven.emulator.wtf/releases/ew-cli -o $HOME/bin/ew-cli && \
-          chmod a+x $HOME/bin/ew-cli
-    - name: "Run tests"
-      shell: bash
-      env:
-        EW_API_TOKEN: ${{ inputs.api-token }}
-      run:
-        $HOME/bin/ew-cli --app ${{ inputs.app-apk }} --test ${{ inputs.test-apk }}
+    - name: "Setup ew-cli"
+      using: 'emulator-wtf/setup-ew-cli@master'
+      with:
+        version: ${{ inputs.version }}
+    - name: "Run instrumented tests"
+      using: 'emulator-wtf/invoke@master'
+      with:
+        api-token: ${{ inputs.api-token }}
+        app-apk: ${{ inputs.app-apk }}
+        test-apk: ${{ inputs.test-apk }}
+        outputs-dir: ${{ inputs.outputs-dir }}
+        devices: ${{ inputs.devices }}
+        use-orchestrator: ${{ inputs.use-orchestrator }}
+        clear-package-data: ${{ inputs.clear-package-data }}
+        with-coverage: ${{ inputs.with-coverage }}
+        additional-apks: ${{ inputs.additional-apks }}
+        environment-variables: ${{ inputs.environment-variables }}
+        num-uniform-shards: ${{ inputs.num-uniform-shards }}
+        directories-to-pull: ${{ inputs.directories-to-pull }}
