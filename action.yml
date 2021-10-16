@@ -49,7 +49,7 @@ runs:
   using: composite
   steps:
     - name: Setup ew-cli
-      using: emulator-wtf/setup-ew-cli@master
+      uses: emulator-wtf/setup-ew-cli@master
       with:
         version: ${{ inputs.version }}
     - name: Run instrumented tests
