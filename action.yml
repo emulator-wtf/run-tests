@@ -9,10 +9,10 @@ inputs:
   api-token:
     description: 'Api token for emulator.wtf'
     required: true
-  app-apk:
+  app:
     description: 'Application apk file'
     required: true
-  test-apk:
+  test:
     description: 'Test apk file'
     required: true
   outputs-dir:
@@ -56,8 +56,8 @@ runs:
       uses: emulator-wtf/invoke@master
       with:
         api-token: ${{ inputs.api-token }}
-        app-apk: ${{ inputs.app-apk }}
-        test-apk: ${{ inputs.test-apk }}
+        app: ${{ inputs.app }}
+        test: ${{ inputs.test }}
         outputs-dir: ${{ inputs.outputs-dir }}
         devices: ${{ inputs.devices }}
         use-orchestrator: ${{ inputs.use-orchestrator }}
