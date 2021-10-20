@@ -34,7 +34,7 @@ inputs:
     description: 'Additional apks to install, one per line'
     required: false
   environment-variables:
-    description: 'Environment variables to pass to AndroidJUnitTestRunner, one per line in the form of key=value'
+    description: 'Environment variables to pass to AndroidJUnitRunner, one per line in the form of key=value'
     required: false
   num-uniform-shards:
     description: 'Set to a number larger than 1 to randomly split your tests into multiple shards.'
