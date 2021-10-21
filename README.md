@@ -52,6 +52,7 @@ jobs:
 | `additional-apks`       | Additional apks to install, one per line |
 | `environment-variables` | Environment variables to pass to AndroidJUnitRunner, one per line in the form of `key=value` |
 | `num-uniform-shards`    | Set to a number larger than 1 to randomly split your tests into multiple shards to be executed in parallel |
+| `num-shards`            | Set to a number larger than 1 to split your tests into multiple shards based on test counts to be executed in parallel |
 | `directories-to-pull`   | Directories to pull from device and store in `outputs-dir`, one per line |
 
 ## Common examples
@@ -123,6 +124,6 @@ the outputs from each shard in a separate folder under `build/test-results`:
         api-token: ${{ secrets.EW_API_TOKEN }}
         app: app/build/outputs/apk/debug/app-debug.apk
         test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
-        num-uniform-shards: 3
+        num-shards: 3
         outputs-dir: build/test-results
 ```

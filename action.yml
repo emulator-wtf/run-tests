@@ -38,6 +38,9 @@ inputs:
     required: false
   num-uniform-shards:
     description: 'Set to a number larger than 1 to randomly split your tests into multiple shards.'
+  num-shards:
+    description: 'Set to a number larger than 1 to split your tests into even shards based on test count.'
+    required: false
     required: false
   directories-to-pull:
     description: 'Directories to pull from device and store in <outputs-dir>, one per line'
@@ -66,4 +69,5 @@ runs:
         additional-apks: ${{ inputs.additional-apks }}
         environment-variables: ${{ inputs.environment-variables }}
         num-uniform-shards: ${{ inputs.num-uniform-shards }}
+        num-shards: ${{ inputs.num-shards }}
         directories-to-pull: ${{ inputs.directories-to-pull }}
