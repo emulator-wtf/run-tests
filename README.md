@@ -4,7 +4,7 @@ Emulator.wtf is an Android cloud emulator laser-focused on performance to
 deliver quick feedback to your PRs.
 
 With this action you can easily run your Android instrumentation tests with
-emulator.wtf.
+[emulator.wtf](https://emulator.wtf).
 
 ## Quick example
 
