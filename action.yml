@@ -1,4 +1,4 @@
-name: 'Run instrumentation tests'
+name: 'Run Android instrumentation tests'
 author: 'emulator.wtf'
 description: 'Run tests with emulator.wtf'
 inputs:
