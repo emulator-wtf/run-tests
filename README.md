@@ -26,8 +26,8 @@ jobs:
       uses: emulator-wtf/run-tests@master
       with:
         api-token: ${{ secrets.EW_API_TOKEN }}
-        app-apk: app/build/outputs/apk/debug/app-debug.apk
-        test-apk: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
+        app: app/build/outputs/apk/debug/app-debug.apk
+        test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
         outputs-dir: build/test-results
     - name: Publish test report
       uses: mikepenz/action-junit-report@v2
@@ -67,8 +67,8 @@ can use the `devices` input to do so:
       uses: emulator-wtf/run-tests@master
       with:
         api-token: ${{ secrets.EW_API_TOKEN }}
-        app-apk: app/build/outputs/apk/debug/app-debug.apk
-        test-apk: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
+        app: app/build/outputs/apk/debug/app-debug.apk
+        test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
         devices: |
           model=NexusLowRes,version=23
           model=Pixel2,version=27
@@ -87,8 +87,8 @@ app persisted state between each run. Read more about orchestrator
       uses: emulator-wtf/run-tests@master
       with:
         api-token: ${{ secrets.EW_API_TOKEN }}
-        app-apk: app/build/outputs/apk/debug/app-debug.apk
-        test-apk: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
+        app: app/build/outputs/apk/debug/app-debug.apk
+        test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
         use-orchestrator: true
         clear-package-data: true
 ```
@@ -104,8 +104,8 @@ results (one or more `.exec` or `.ec` files) in the path specified by
       uses: emulator-wtf/run-tests@master
       with:
         api-token: ${{ secrets.EW_API_TOKEN }}
-        app-apk: app/build/outputs/apk/debug/app-debug.apk
-        test-apk: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
+        app: app/build/outputs/apk/debug/app-debug.apk
+        test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
         with-coverage: true
         outputs-dir: build/test-results
 ```
@@ -121,8 +121,8 @@ the outputs from each shard in a separate folder under `build/test-results`:
       uses: emulator-wtf/run-tests@master
       with:
         api-token: ${{ secrets.EW_API_TOKEN }}
-        app-apk: app/build/outputs/apk/debug/app-debug.apk
-        test-apk: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
+        app: app/build/outputs/apk/debug/app-debug.apk
+        test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
         num-uniform-shards: 3
         outputs-dir: build/test-results
 ```
