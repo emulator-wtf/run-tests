@@ -38,9 +38,9 @@ inputs:
     required: false
   num-uniform-shards:
     description: 'Set to a number larger than 1 to randomly split your tests into multiple shards.'
+    required: false
   num-shards:
     description: 'Set to a number larger than 1 to split your tests into even shards based on test count.'
-    required: false
     required: false
   directories-to-pull:
     description: 'Directories to pull from device and store in <outputs-dir>, one per line'
