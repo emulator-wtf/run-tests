@@ -3,9 +3,9 @@ author: 'emulator.wtf'
 description: 'Run tests with emulator.wtf'
 inputs:
   version:
-    description: 'ew-cli verison to use'
+    description: 'ew-cli version to use'
     required: true
-    default: '0.0.46'
+    default: '0.0.47'
   api-token:
     description: 'Api token for emulator.wtf'
     required: true
