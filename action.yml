@@ -52,11 +52,11 @@ runs:
   using: composite
   steps:
     - name: Setup ew-cli
-      uses: emulator-wtf/setup-ew-cli@master
+      uses: emulator-wtf/setup-ew-cli@v0
       with:
         version: ${{ inputs.version }}
     - name: Run instrumented tests
-      uses: emulator-wtf/invoke@master
+      uses: emulator-wtf/invoke@v0
       with:
         api-token: ${{ inputs.api-token }}
         app: ${{ inputs.app }}
