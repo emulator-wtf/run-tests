@@ -11,15 +11,27 @@ inputs:
     required: true
   app:
     description: 'Application apk file'
-    required: true
+    required: false
   test:
     description: 'Test apk file'
-    required: true
+    required: false
+  library-test:
+    description: 'Library test apk file'
+    required: false
   outputs-dir:
     description: 'Location to store test outputs in'
     required: false
+  outputs:
+    description: "Comma-separated list to specify what to download to output-dir. Defaults to merged_results_xml,coverage,pulled_dirs"
+    required: false
+  record-video:
+    description: 'Set to true to record video of the test run'
+    required: false
   devices:
     description: 'Device configurations to use, in the form of model=X,version=Y per line'
+    required: false
+  timeout:
+    description: 'Max time until this test run is cancelled, expressed by a number followed by an unit (h, m or s), with the maximum value being 3h and minimum value being 60s (default: 15m)'
     required: false
   use-orchestrator:
     description: 'Set to true to use the Android Test Orchestrator'
@@ -42,8 +54,26 @@ inputs:
   num-shards:
     description: 'Set to a number larger than 1 to split your tests into even shards based on test count.'
     required: false
+  num-balanced-shards:
+    description: 'Set to a number larger than 1 to split your tests into even shards based on historical runtime.'
+    required: false
   directories-to-pull:
     description: 'Directories to pull from device and store in <outputs-dir>, one per line'
+    required: false
+  side-effects:
+    description: "Indicates that the test run has side effects, i.e. it hits external resources and might be a part of a bigger test suite. Adding this flag means that the test will not be automatically retried in case of errors. Default: false."
+    required: false
+  num-flaky-test-attempts:
+    description: "Number of times to re-run shards or jobs that had test failures. Repeat attempts will run in parallel. Default: 0."
+    required: false
+  file-cache:
+    description: "Set to false to disable remote file cache - APK and test-data will always be uploaded, even if they were uploaded before"
+    required: false
+  file-cache-ttl:
+    description: "Max time to keep cached files in the backend followed by an unit (d,h, m or s), with the maximum value being 90d and minimum value being 5m (default: 1h)"
+    required: false
+  test-cache:
+    description: "Set to false to disable remote test cache - tests will always re-run, even if they were run before"
     required: false
 branding:
   color: orange
@@ -61,8 +91,12 @@ runs:
         api-token: ${{ inputs.api-token }}
         app: ${{ inputs.app }}
         test: ${{ inputs.test }}
+        library-test: ${{ inputs.library-test }}
         outputs-dir: ${{ inputs.outputs-dir }}
+        outputs: ${{ inputs.outputs }}
+        record-video: ${{ inputs.record-video }}
         devices: ${{ inputs.devices }}
+        timeout: ${{ inputs.timeout }}
         use-orchestrator: ${{ inputs.use-orchestrator }}
         clear-package-data: ${{ inputs.clear-package-data }}
         with-coverage: ${{ inputs.with-coverage }}
@@ -70,4 +104,10 @@ runs:
         environment-variables: ${{ inputs.environment-variables }}
         num-uniform-shards: ${{ inputs.num-uniform-shards }}
         num-shards: ${{ inputs.num-shards }}
+        num-balanced-shards: ${{ inputs.num-balanced-shards }}
         directories-to-pull: ${{ inputs.directories-to-pull }}
+        side-effects: ${{ inputs.side-effects }}
+        num-flaky-test-attempts: ${{ inputs.num-flaky-test-attempts }}
+        file-cache: ${{ inputs.file-cache }}
+        file-cache-ttl: ${{ inputs.file-cache-ttl }}
+        test-cache: ${{ inputs.test-cache }}

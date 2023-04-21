@@ -38,22 +38,32 @@ jobs:
 
 ## Inputs
 
-| Variable                | Description |
-| ----------------------- | ----------- |
-| `version`               | ew-cli version to use |
-| `api-token`             | API token for emulator.wtf. We recommend using a secret for this. |
-| `app`                   | Path to application apk file |
-| `test`                  | Path to test apk file |
-| `outputs-dir`           | Location to store test outputs in |
-| `devices`               | Device configurations to use, in the form of `model=X,version=Y` per line |
-| `use-orchestrator`      | Whether to use the Android Test Orchestrator |
-| `clear-package-data`    | Whether to clear app data between every test (requires `use-orchestrator`) |
-| `with-coverage`         | Set to true to collect coverage files and save them to `outputs-dir` |
-| `additional-apks`       | Additional apks to install, one per line |
-| `environment-variables` | Environment variables to pass to AndroidJUnitRunner, one per line in the form of `key=value` |
-| `num-uniform-shards`    | Set to a number larger than 1 to randomly split your tests into multiple shards to be executed in parallel |
-| `num-shards`            | Set to a number larger than 1 to split your tests into multiple shards based on test counts to be executed in parallel |
-| `directories-to-pull`   | Directories to pull from device and store in `outputs-dir`, one per line |
+| Variable                  | Description                                                                                                                    |
+|---------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| `version`                 | ew-cli version to use                                                                                                          |
+| `api-token`               | API token for emulator.wtf. We recommend using a secret for this.                                                              |
+| `app`                     | Path to application apk file                                                                                                   |
+| `test`                    | Path to test apk file                                                                                                          |
+| `library-test`            | Path to library test apk file                                                                                                  |
+| `outputs-dir`             | Location to store test outputs in                                                                                              |
+| `outputs`                 | Comma-separated list to specify what to download to output-dir. Defaults to `merged_results_xml,coverage,pulled_dirs`.         |
+| `record-video`            | Set to true to record a video of the test run. Defaults to false.                                                              |
+| `devices`                 | Device configurations to use, in the form of `model=X,version=Y` per line                                                      |
+| `timeout`                 | Timeout for the test run, number with unit (`h`, `m` or `s`). Defaults to 15m.                                                 |
+| `use-orchestrator`        | Whether to use the Android Test Orchestrator                                                                                   |
+| `clear-package-data`      | Whether to clear app data between every test (requires `use-orchestrator`)                                                     |
+| `with-coverage`           | Set to true to collect coverage files and save them to `outputs-dir`                                                           |
+| `additional-apks`         | Additional apks to install, one per line                                                                                       |
+| `environment-variables`   | Environment variables to pass to AndroidJUnitRunner, one per line in the form of `key=value`                                   |
+| `num-uniform-shards`      | Set to a number larger than 1 to randomly split your tests into multiple shards to be executed in parallel                     |
+| `num-shards`              | Set to a number larger than 1 to split your tests into multiple shards based on test counts to be executed in parallel         |
+| `num-balance-shards`      | Set to a number larger than 1 to split your tests into multiple shards based on test execution time to be executed in parallel |
+| `directories-to-pull`     | Directories to pull from device and store in `outputs-dir`, one per line                                                       |
+| `side-effects`            | Whether the test has any side effects, like hitting external APIs. Prevents any test caching and retries.                      |
+| `num-flaky-test-attempts` | Number of times to retry flaky tests. Defaults to 0.                                                                           |
+| `file-cache`              | Whether to cache files between test runs. Defaults to true.                                                                    |
+| `file-cache-ttl`          | How long to cache test files for. Defaults to 1h.                                                                              |
+| `test-cache`              | Whether to cache test results between test runs. Defaults to true.                                                             |
 
 ## Common examples
 
