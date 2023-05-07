@@ -5,7 +5,7 @@ inputs:
   version:
     description: 'ew-cli version to use'
     required: true
-    default: '0.9.7'
+    default: '0.9.9'
   api-token:
     description: 'Api token for emulator.wtf'
     required: true
@@ -75,6 +75,9 @@ inputs:
   test-cache:
     description: "Set to false to disable remote test cache - tests will always re-run, even if they were run before"
     required: false
+  async:
+    description: "Run the test asynchronously, without waiting for the results. This shines when used together with GitHub integration."
+    required: false
 branding:
   color: orange
   icon: smartphone
@@ -111,3 +114,4 @@ runs:
         file-cache: ${{ inputs.file-cache }}
         file-cache-ttl: ${{ inputs.file-cache-ttl }}
         test-cache: ${{ inputs.test-cache }}
+        async: ${{ inputs.async }}
