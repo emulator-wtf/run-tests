@@ -5,7 +5,7 @@ inputs:
   version:
     description: 'ew-cli version to use'
     required: true
-    default: '0.9.9'
+    default: '0.9.13'
   api-token:
     description: 'Api token for emulator.wtf'
     required: true
@@ -32,6 +32,9 @@ inputs:
     required: false
   timeout:
     description: 'Max time until this test run is cancelled, expressed by a number followed by an unit (h, m or s), with the maximum value being 3h and minimum value being 60s (default: 15m)'
+    required: false
+  test-targets:
+    description: 'Test targets to run, one operator-target per line, e.g. class foo.bar.Foobar'
     required: false
   use-orchestrator:
     description: 'Set to true to use the Android Test Orchestrator'
@@ -78,6 +81,9 @@ inputs:
   async:
     description: "Run the test asynchronously, without waiting for the results. This shines when used together with GitHub integration."
     required: false
+  display-name:
+    description: "Display name for the test run, this is used to identify the test run in the GitHub integration."
+    required: false
 branding:
   color: orange
   icon: smartphone
@@ -100,6 +106,7 @@ runs:
         record-video: ${{ inputs.record-video }}
         devices: ${{ inputs.devices }}
         timeout: ${{ inputs.timeout }}
+        test-targets: ${{ inputs.test-targets }}
         use-orchestrator: ${{ inputs.use-orchestrator }}
         clear-package-data: ${{ inputs.clear-package-data }}
         with-coverage: ${{ inputs.with-coverage }}
@@ -115,3 +122,4 @@ runs:
         file-cache-ttl: ${{ inputs.file-cache-ttl }}
         test-cache: ${{ inputs.test-cache }}
         async: ${{ inputs.async }}
+        display-name: ${{ inputs.display-name }}

@@ -50,6 +50,7 @@ jobs:
 | `record-video`            | Set to true to record a video of the test run. Defaults to false.                                                              |
 | `devices`                 | Device configurations to use, in the form of `model=X,version=Y` per line                                                      |
 | `timeout`                 | Timeout for the test run, number with unit (`h`, `m` or `s`). Defaults to 15m.                                                 |
+| `test-targets`            | Test targets to run, e.g. `class foo.bar.Baz` will only run tests in that class                                                |
 | `use-orchestrator`        | Whether to use the Android Test Orchestrator                                                                                   |
 | `clear-package-data`      | Whether to clear app data between every test (requires `use-orchestrator`)                                                     |
 | `with-coverage`           | Set to true to collect coverage files and save them to `outputs-dir`                                                           |
