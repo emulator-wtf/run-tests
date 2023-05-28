@@ -65,6 +65,10 @@ jobs:
 | `file-cache`              | Whether to cache files between test runs. Defaults to true.                                                                    |
 | `file-cache-ttl`          | How long to cache test files for. Defaults to 1h.                                                                              |
 | `test-cache`              | Whether to cache test results between test runs. Defaults to true.                                                             |
+| `proxy-host`              | Configure a proxy host to use for all requests when making emulator.wtf API calls.                                             |
+| `proxy-port`              | Configure a proxy port to use for all requests when making emulator.wtf API calls.                                             |
+| `proxy-user`              | Set the proxy user to use for authentication.                                                                                  |
+| `proxy-password`          | Set the proxy password to use for authentication.                                                                              |
 
 ## Common examples
 
