@@ -60,6 +60,9 @@ inputs:
   num-balanced-shards:
     description: 'Set to a number larger than 1 to split your tests into even shards based on historical runtime.'
     required: false
+  shard-target-runtime:
+    description: 'Target runtime for each shard in seconds, tests will be split based to shards targeting this runtime for each shard based on historical data on a best effort basis.'
+    required: false
   directories-to-pull:
     description: 'Directories to pull from device and store in <outputs-dir>, one per line'
     required: false
@@ -68,6 +71,9 @@ inputs:
     required: false
   num-flaky-test-attempts:
     description: "Number of times to re-run shards or jobs that had test failures. Repeat attempts will run in parallel. Default: 0."
+    required: false
+  flaky-test-repeat-mode:
+    description: "Whether to repeat the whole failed shard (all) or only the failed tests (failed_only) in case of flaky tests. Default: failed_only."
     required: false
   file-cache:
     description: "Set to false to disable remote file cache - APK and test-data will always be uploaded, even if they were uploaded before"
