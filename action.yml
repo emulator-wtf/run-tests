@@ -5,7 +5,7 @@ inputs:
   version:
     description: 'ew-cli version to use'
     required: true
-    default: '0.9.16'
+    default: '0.9.17'
   api-token:
     description: 'Api token for emulator.wtf'
     required: true
