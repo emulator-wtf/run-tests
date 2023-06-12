@@ -103,11 +103,11 @@ runs:
   using: composite
   steps:
     - name: Setup ew-cli
-      uses: emulator-wtf/setup-ew-cli@v0.9.5
+      uses: emulator-wtf/setup-ew-cli@v0.9.6
       with:
         version: ${{ inputs.version }}
     - name: Run instrumented tests
-      uses: emulator-wtf/invoke@v0.9.5
+      uses: emulator-wtf/invoke@v0.9.6
       with:
         api-token: ${{ inputs.api-token }}
         app: ${{ inputs.app }}
