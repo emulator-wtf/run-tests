@@ -8,7 +8,7 @@ inputs:
     default: '0.11.0'
   api-token:
     description: 'Api token for emulator.wtf'
-    required: true
+    required: false
   app:
     description: 'Application apk file'
     required: false
