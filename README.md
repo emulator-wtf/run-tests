@@ -58,7 +58,7 @@ jobs:
 | `timeout`                      | Timeout for the test run, number with unit (`h`, `m` or `s`). Defaults to 15m.                                                                                               |
 | `test-targets`                 | Test targets to run, e.g. `class foo.bar.Baz` will only run tests in that class                                                                                              |
 | `environment-variables`        | Environment variables to pass to AndroidJUnitRunner, one per line in the form of `key=value`                                                                                 |
-| `secret-environment-variables` | Secret environment variables to pass to AndroidJUnitTestRunner, one per line in the form of key=value                                                                        |
+| `secret-environment-variables` | Secret environment variables to pass to AndroidJUnitRunner, one per line in the form of key=value                                                                            |
 | `test-cache`                   | Whether to cache test results between test runs. Defaults to true.                                                                                                           |
 | `side-effects`                 | Whether the test has any side effects, like hitting external APIs. Prevents any test caching and retries.                                                                    |
 | `num-balanced-shards`          | Set to a number larger than 1 to split your tests into multiple shards based on test execution time to be executed in parallel                                               |
