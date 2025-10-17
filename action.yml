@@ -2,13 +2,16 @@ name: 'Run Android instrumentation tests'
 author: 'emulator.wtf'
 description: 'Run tests with emulator.wtf'
 inputs:
+  # ew-cli
   version:
     description: 'ew-cli version to use'
     required: true
     default: '0.12.6'
+  # Authentication
   api-token:
     description: 'Api token for emulator.wtf'
     required: false
+  # File options
   app:
     description: 'Application apk file'
     required: false
@@ -18,23 +21,21 @@ inputs:
   library-test:
     description: 'Library test apk file'
     required: false
-  outputs-dir:
-    description: 'Location to store test outputs in'
+  additional-apks:
+    description: 'Additional apks to install, one per line'
     required: false
-  outputs:
-    description: "Comma-separated list to specify what to download to output-dir. Defaults to merged_results_xml,coverage,pulled_dirs"
+  file-cache-ttl:
+    description: "Max time to keep cached files in the backend followed by an unit (d,h, m or s), with the maximum value being 90d and minimum value being 5m (default: 1h)"
     required: false
-  record-video:
-    description: 'Set to true to record video of the test run'
+  file-cache:
+    description: "Set to false to disable remote file cache - APK and test-data will always be uploaded, even if they were uploaded before"
+    required: false
+  # Test configuration
+  display-name:
+    description: "Display name for the test run, this is used to identify the test run in the GitHub integration."
     required: false
   devices:
     description: 'Device configurations to use, in the form of model=X,version=Y per line'
-    required: false
-  timeout:
-    description: 'Max time until this test run is cancelled, expressed by a number followed by an unit (h, m or s), with the maximum value being 3h and minimum value being 60s (default: 15m)'
-    required: false
-  test-targets:
-    description: 'Test targets to run, one operator-target per line, e.g. class foo.bar.Foobar'
     required: false
   use-orchestrator:
     description: 'Set to true to use the Android Test Orchestrator'
@@ -42,14 +43,33 @@ inputs:
   clear-package-data:
     description: 'Set to true to clear app data between every test (only works with orchestrator)'
     required: false
-  with-coverage:
-    description: 'Set to true to collect coverage files and save them to <outputs-dir>'
+  num-flaky-test-attempts:
+    description: "Number of times to re-run shards or jobs that had test failures. Repeat attempts will run in parallel. Default: 0."
     required: false
-  additional-apks:
-    description: 'Additional apks to install, one per line'
+  flaky-test-repeat-mode:
+    description: "Whether to repeat the whole failed shard (all) or only the failed tests (failed_only) in case of flaky tests. Default: failed_only."
+    required: false
+  timeout:
+    description: 'Max time until this test run is cancelled, expressed by a number followed by an unit (h, m or s), with the maximum value being 3h and minimum value being 60s (default: 15m)'
+    required: false
+  test-targets:
+    description: 'Test targets to run, one operator-target per line, e.g. class foo.bar.Foobar'
     required: false
   environment-variables:
     description: 'Environment variables to pass to AndroidJUnitRunner, one per line in the form of key=value'
+    required: false
+  test-cache:
+    description: "Set to false to disable remote test cache - tests will always re-run, even if they were run before"
+    required: false
+  side-effects:
+    description: "Indicates that the test run has side effects, i.e. it hits external resources and might be a part of a bigger test suite. Adding this flag means that the test will not be automatically retried in case of errors. Default: false."
+    required: false
+  # Test sharding
+  num-balanced-shards:
+    description: 'Set to a number larger than 1 to split your tests into even shards based on historical runtime.'
+    required: false
+  shard-target-runtime:
+    description: 'Target runtime for each shard in seconds, tests will be split based to shards targeting this runtime for each shard based on historical data on a best effort basis.'
     required: false
   num-uniform-shards:
     description: 'Set to a number larger than 1 to randomly split your tests into multiple shards.'
@@ -57,39 +77,24 @@ inputs:
   num-shards:
     description: 'Set to a number larger than 1 to split your tests into even shards based on test count.'
     required: false
-  num-balanced-shards:
-    description: 'Set to a number larger than 1 to split your tests into even shards based on historical runtime.'
+  # Test outputs
+  record-video:
+    description: 'Set to true to record video of the test run'
     required: false
-  shard-target-runtime:
-    description: 'Target runtime for each shard in seconds, tests will be split based to shards targeting this runtime for each shard based on historical data on a best effort basis.'
+  with-coverage:
+    description: 'Set to true to collect coverage files and save them to <outputs-dir>'
     required: false
   directories-to-pull:
     description: 'Directories to pull from device and store in <outputs-dir>, one per line'
     required: false
-  side-effects:
-    description: "Indicates that the test run has side effects, i.e. it hits external resources and might be a part of a bigger test suite. Adding this flag means that the test will not be automatically retried in case of errors. Default: false."
+  outputs:
+    description: "Comma-separated list to specify what to download to output-dir. Defaults to merged_results_xml,coverage,pulled_dirs"
     required: false
-  num-flaky-test-attempts:
-    description: "Number of times to re-run shards or jobs that had test failures. Repeat attempts will run in parallel. Default: 0."
+  outputs-dir:
+    description: 'Location to store test outputs in'
     required: false
-  flaky-test-repeat-mode:
-    description: "Whether to repeat the whole failed shard (all) or only the failed tests (failed_only) in case of flaky tests. Default: failed_only."
-    required: false
-  file-cache:
-    description: "Set to false to disable remote file cache - APK and test-data will always be uploaded, even if they were uploaded before"
-    required: false
-  file-cache-ttl:
-    description: "Max time to keep cached files in the backend followed by an unit (d,h, m or s), with the maximum value being 90d and minimum value being 5m (default: 1h)"
-    required: false
-  test-cache:
-    description: "Set to false to disable remote test cache - tests will always re-run, even if they were run before"
-    required: false
-  async:
-    description: "Run the test asynchronously, without waiting for the results. This shines when used together with GitHub integration."
-    required: false
-  display-name:
-    description: "Display name for the test run, this is used to identify the test run in the GitHub integration."
-    required: false
+  # Network options (emulator)
+  # Network options (action)
   proxy-host:
     description: "Configure a proxy host to use for all requests when making emulator.wtf API calls."
     required: false
@@ -101,6 +106,10 @@ inputs:
     required: false
   proxy-password:
     description: "Set the proxy password to use for authentication."
+    required: false
+  # Operation
+  async:
+    description: "Run the test asynchronously, without waiting for the results. This shines when used together with GitHub integration."
     required: false
 branding:
   color: orange
@@ -115,33 +124,43 @@ runs:
     - name: Run instrumented tests
       uses: emulator-wtf/invoke@v0.9.7
       with:
+        # Authentication
         api-token: ${{ inputs.api-token }}
+        # File options
         app: ${{ inputs.app }}
         test: ${{ inputs.test }}
         library-test: ${{ inputs.library-test }}
-        outputs-dir: ${{ inputs.outputs-dir }}
-        outputs: ${{ inputs.outputs }}
-        record-video: ${{ inputs.record-video }}
+        additional-apks: ${{ inputs.additional-apks }}
+        file-cache-ttl: ${{ inputs.file-cache-ttl }}
+        file-cache: ${{ inputs.file-cache }}
+        # Test configuration
+        display-name: ${{ inputs.display-name }}
         devices: ${{ inputs.devices }}
-        timeout: ${{ inputs.timeout }}
-        test-targets: ${{ inputs.test-targets }}
         use-orchestrator: ${{ inputs.use-orchestrator }}
         clear-package-data: ${{ inputs.clear-package-data }}
-        with-coverage: ${{ inputs.with-coverage }}
-        additional-apks: ${{ inputs.additional-apks }}
+        num-flaky-test-attempts: ${{ inputs.num-flaky-test-attempts }}
+        flaky-test-repeat-mode: ${{ inputs.flaky-test-repeat-mode }}
+        timeout: ${{ inputs.timeout }}
+        test-targets: ${{ inputs.test-targets }}
         environment-variables: ${{ inputs.environment-variables }}
+        test-cache: ${{ inputs.test-cache }}
+        side-effects: ${{ inputs.side-effects }}
+        # Test Sharding
+        shard-target-runtime: ${{ inputs.shard-target-runtime }}
+        num-balanced-shards: ${{ inputs.num-balanced-shards }}
         num-uniform-shards: ${{ inputs.num-uniform-shards }}
         num-shards: ${{ inputs.num-shards }}
-        num-balanced-shards: ${{ inputs.num-balanced-shards }}
+        # Test outputs
+        record-video: ${{ inputs.record-video }}
+        with-coverage: ${{ inputs.with-coverage }}
         directories-to-pull: ${{ inputs.directories-to-pull }}
-        side-effects: ${{ inputs.side-effects }}
-        num-flaky-test-attempts: ${{ inputs.num-flaky-test-attempts }}
-        file-cache: ${{ inputs.file-cache }}
-        file-cache-ttl: ${{ inputs.file-cache-ttl }}
-        test-cache: ${{ inputs.test-cache }}
-        async: ${{ inputs.async }}
-        display-name: ${{ inputs.display-name }}
+        outputs: ${{ inputs.outputs }}
+        outputs-dir: ${{ inputs.outputs-dir }}
+        # Network options (emulator)
+        # Network options (action)
         proxy-host: ${{ inputs.proxy-host }}
         proxy-port: ${{ inputs.proxy-port }}
         proxy-user: ${{ inputs.proxy-user }}
         proxy-password: ${{ inputs.proxy-password }}
+        # Operation
+        async: ${{ inputs.async }}
