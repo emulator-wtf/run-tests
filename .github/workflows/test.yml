@@ -1,5 +1,5 @@
 name: Test
-permission:
+permissions:
   contents: read
   id-token: write
 on:
