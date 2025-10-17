@@ -1,4 +1,7 @@
 name: Test
+permissions:
+  contents: read
+  id-token: write
 on:
   pull_request:
   push:
@@ -10,10 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - uses: emulator-wtf/configure-credentials@v1
+      with:
+        oidc-configuration-id: ${{ vars.EW_OIDC_ID }}
     - run: curl -o minimal.apk -sS https://maven.emulator.wtf/releases/wtf/emulator/minimal/0.0.2/minimal-0.0.2.apk 
     - run: curl -o minimal-test.apk -sS https://maven.emulator.wtf/releases/wtf/emulator/minimal/0.0.2/minimal-0.0.2-test.apk 
     - uses: ./
       with: 
-        api-token: ${{ secrets.GITHUB_TOKEN }}
         app: minimal.apk
         test: minimal-test.apk
