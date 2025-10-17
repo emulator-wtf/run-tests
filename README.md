@@ -38,39 +38,41 @@ jobs:
 
 ## Inputs
 
-| Variable                   | Description                                                                                                                    |
-|----------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| `version`                  | ew-cli version to use                                                                                                          |
-| `api-token`                | API token for emulator.wtf. We recommend using a secret for this.                                                              |
-| `app`                      | Path to application apk file                                                                                                   |
-| `test`                     | Path to test apk file                                                                                                          |
-| `library-test`             | Path to library test apk file                                                                                                  |
-| `outputs-dir`              | Location to store test outputs in                                                                                              |
-| `outputs`                  | Comma-separated list to specify what to download to output-dir. Defaults to `merged_results_xml,coverage,pulled_dirs`.         |
-| `record-video`             | Set to true to record a video of the test run. Defaults to false.                                                              |
-| `devices`                  | Device configurations to use, in the form of `model=X,version=Y` per line                                                      |
-| `timeout`                  | Timeout for the test run, number with unit (`h`, `m` or `s`). Defaults to 15m.                                                 |
-| `test-targets`             | Test targets to run, e.g. `class foo.bar.Baz` will only run tests in that class                                                |
-| `use-orchestrator`         | Whether to use the Android Test Orchestrator                                                                                   |
-| `clear-package-data`       | Whether to clear app data between every test (requires `use-orchestrator`)                                                     |
-| `with-coverage`            | Set to true to collect coverage files and save them to `outputs-dir`                                                           |
-| `additional-apks`          | Additional apks to install, one per line                                                                                       |
-| `environment-variables`    | Environment variables to pass to AndroidJUnitRunner, one per line in the form of `key=value`                                   |
-| `num-uniform-shards`       | Set to a number larger than 1 to randomly split your tests into multiple shards to be executed in parallel                     |
-| `num-shards`               | Set to a number larger than 1 to split your tests into multiple shards based on test counts to be executed in parallel         |
-| `num-balanced-shards`      | Set to a number larger than 1 to split your tests into multiple shards based on test execution time to be executed in parallel |
-| `shard-target-runtime`     | Target a specific runtime (in minutes), this will spawn as many shards as needed to hit the target runtime.                    |
-| `directories-to-pull`      | Directories to pull from device and store in `outputs-dir`, one per line                                                       |
-| `side-effects`             | Whether the test has any side effects, like hitting external APIs. Prevents any test caching and retries.                      |
-| `num-flaky-test-attempts`  | Number of times to retry flaky tests. Defaults to 0.                                                                           |
-| `flaky-test-repeat-mode`   | Whether to repeat only flaky tests (failed_only) or full shards (all) with flaky test attempts. Defaults to failed_only.       |
-| `file-cache`               | Whether to cache files between test runs. Defaults to true.                                                                    |
-| `file-cache-ttl`           | How long to cache test files for. Defaults to 1h.                                                                              |
-| `test-cache`               | Whether to cache test results between test runs. Defaults to true.                                                             |
-| `proxy-host`               | Configure a proxy host to use for all requests when making emulator.wtf API calls.                                             |
-| `proxy-port`               | Configure a proxy port to use for all requests when making emulator.wtf API calls.                                             |
-| `proxy-user`               | Set the proxy user to use for authentication.                                                                                  |
-| `proxy-password`           | Set the proxy password to use for authentication.                                                                              |
+| Variable                   | Description                                                                                                                      |
+|----------------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| `version`                  | ew-cli version to use                                                                                                            |
+| `api-token`                | API token for emulator.wtf. We recommend using a secret for this.                                                                |
+| `app`                      | Path to application apk file                                                                                                     |
+| `test`                     | Path to test apk file                                                                                                            |
+| `library-test`             | Path to library test apk file                                                                                                    |
+| `additional-apks`          | Additional apks to install, one per line                                                                                         |
+| `file-cache-ttl`           | How long to cache test files for. Defaults to 1h.                                                                                |
+| `file-cache`               | Whether to cache files between test runs. Defaults to true.                                                                      |
+| `display-name`             | Display name for the test run                                                                                                    |
+| `devices`                  | Device configurations to use, in the form of `model=X,version=Y` per line                                                        |
+| `use-orchestrator`         | Whether to use the Android Test Orchestrator                                                                                     |
+| `clear-package-data`       | Whether to clear app data between every test (requires `use-orchestrator`)                                                       |
+| `num-flaky-test-attempts`  | Number of times to retry flaky tests. Defaults to 0.                                                                             |
+| `flaky-test-repeat-mode`   | Whether to repeat only flaky tests (failed_only) or full shards (all) with flaky test attempts. Defaults to failed_only.         |
+| `timeout`                  | Timeout for the test run, number with unit (`h`, `m` or `s`). Defaults to 15m.                                                   |
+| `test-targets`             | Test targets to run, e.g. `class foo.bar.Baz` will only run tests in that class                                                  |
+| `environment-variables`    | Environment variables to pass to AndroidJUnitRunner, one per line in the form of `key=value`                                     |
+| `test-cache`               | Whether to cache test results between test runs. Defaults to true.                                                               |
+| `side-effects`             | Whether the test has any side effects, like hitting external APIs. Prevents any test caching and retries.                        |
+| `num-balanced-shards`      | Set to a number larger than 1 to split your tests into multiple shards based on test execution time to be executed in parallel   |
+| `shard-target-runtime`     | Target a specific runtime (in minutes), this will spawn as many shards as needed to hit the target runtime.                      |
+| `num-uniform-shards`       | Set to a number larger than 1 to randomly split your tests into multiple shards to be executed in parallel                       |
+| `num-shards`               | Set to a number larger than 1 to split your tests into multiple shards based on test counts to be executed in parallel           |
+| `record-video`             | Set to true to record a video of the test run. Defaults to false.                                                                |
+| `with-coverage`            | Set to true to collect coverage files and save them to `outputs-dir`                                                             |
+| `directories-to-pull`      | Directories to pull from device and store in `outputs-dir`, one per line                                                         |
+| `outputs`                  | Comma-separated list to specify what to download to output-dir. Defaults to `merged_results_xml,coverage,pulled_dirs`.           |
+| `outputs-dir`              | Location to store test outputs in                                                                                                |
+| `proxy-host`               | Configure a proxy host to use for all requests when making emulator.wtf API calls.                                               |
+| `proxy-port`               | Configure a proxy port to use for all requests when making emulator.wtf API calls.                                               |
+| `proxy-user`               | Set the proxy user to use for authentication.                                                                                    |
+| `proxy-password`           | Set the proxy password to use for authentication.                                                                                |
+| `async`                    | Run the test asynchronously, without waiting for the results. Useful if you're using the GitHub integration with check statuses. |
 
 ## Common examples
 
