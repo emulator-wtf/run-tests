@@ -62,7 +62,7 @@ inputs:
     description: 'Environment variables to pass to AndroidJUnitRunner, one per line in the form of key=value'
     required: false
   secret-environment-variables:
-    description: 'Secret environment variables to pass to AndroidJUnitTestRunner, one per line in the form of key=value. Use this for passing tokens, passwords, credentials, etc.'
+    description: 'Secret environment variables to pass to AndroidJUnitRunner, one per line in the form of key=value. Use this for passing tokens, passwords, credentials, etc.'
     required: false
   test-cache:
     description: "Set to false to disable remote test cache - tests will always re-run, even if they were run before"
