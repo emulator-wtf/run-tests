@@ -40,6 +40,9 @@ inputs:
   use-orchestrator:
     description: 'Set to true to use the Android Test Orchestrator'
     required: false
+  test-runner-class:
+    description: 'Instrumentation runner class to use for running tests (default is read from the test apk)'
+    required: false
   clear-package-data:
     description: 'Set to true to clear app data between every test (only works with orchestrator)'
     required: false
@@ -57,6 +60,9 @@ inputs:
     required: false
   environment-variables:
     description: 'Environment variables to pass to AndroidJUnitRunner, one per line in the form of key=value'
+    required: false
+  secret-environment-variables:
+    description: 'Secret environment variables to pass to AndroidJUnitRunner, one per line in the form of key=value. Use this for passing tokens, passwords, credentials, etc.'
     required: false
   test-cache:
     description: "Set to false to disable remote test cache - tests will always re-run, even if they were run before"
@@ -94,6 +100,18 @@ inputs:
     description: 'Location to store test outputs in'
     required: false
   # Network options (emulator)
+  dns-server:
+    description: 'DNS server(s) to use for the emulator, one per line. Can specify up to 4 servers. If not specified, the emulator will use default DNS servers.'
+    required: false
+  dns-override:
+    description: 'Hard-code specific hostname-ip combinations, one per line in the form of hostname=ip (e.g. example.com=10.0.0.1)'
+    required: false
+  egress-tunnel:
+    description: 'Set to true to enable tunneling outgoing internet traffic from the emulator to the action. This will redirect all network traffic as if you were running the emulator within the action.'
+    required: false
+  egress-localhost-fwd-ip:
+    description: "When using the egress tunnel, make this action's localhost available to the emulator under the specified IP address (should NOT be a public IP, loopback IP or broadcast IP)"
+    required: false
   # Network options (action)
   proxy-host:
     description: "Configure a proxy host to use for all requests when making emulator.wtf API calls."
@@ -136,6 +154,7 @@ runs:
         # Test configuration
         display-name: ${{ inputs.display-name }}
         devices: ${{ inputs.devices }}
+        test-runner-class: ${{ inputs.test-runner-class }}
         use-orchestrator: ${{ inputs.use-orchestrator }}
         clear-package-data: ${{ inputs.clear-package-data }}
         num-flaky-test-attempts: ${{ inputs.num-flaky-test-attempts }}
@@ -143,6 +162,7 @@ runs:
         timeout: ${{ inputs.timeout }}
         test-targets: ${{ inputs.test-targets }}
         environment-variables: ${{ inputs.environment-variables }}
+        secret-environment-variables: ${{ inputs.secret-environment-variables }}
         test-cache: ${{ inputs.test-cache }}
         side-effects: ${{ inputs.side-effects }}
         # Test Sharding
@@ -157,6 +177,10 @@ runs:
         outputs: ${{ inputs.outputs }}
         outputs-dir: ${{ inputs.outputs-dir }}
         # Network options (emulator)
+        dns-server: ${{ inputs.dns-server }}
+        dns-override: ${{ inputs.dns-override }}
+        egress-tunnel: ${{ inputs.egress-tunnel }}
+        egress-localhost-fwd-ip: ${{ inputs.egress-localhost-fwd-ip }}
         # Network options (action)
         proxy-host: ${{ inputs.proxy-host }}
         proxy-port: ${{ inputs.proxy-port }}
