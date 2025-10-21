@@ -6,7 +6,7 @@ inputs:
   version:
     description: 'ew-cli version to use'
     required: true
-    default: '0.12.6'
+    default: '1.0.0-rc01'
   # Authentication
   api-token:
     description: 'Api token for emulator.wtf'
@@ -136,11 +136,11 @@ runs:
   using: composite
   steps:
     - name: Setup ew-cli
-      uses: emulator-wtf/setup-ew-cli@v0.9.11
+      uses: emulator-wtf/setup-ew-cli@v1.0.0-rc01
       with:
         version: ${{ inputs.version }}
     - name: Run instrumented tests
-      uses: emulator-wtf/invoke@v0.9.8
+      uses: emulator-wtf/invoke@v1.0.0-rc01
       with:
         # Authentication
         api-token: ${{ inputs.api-token }}
