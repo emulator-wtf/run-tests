@@ -139,7 +139,7 @@ runs:
   using: composite
   steps:
     - name: Setup ew-cli
-      uses: emulator-wtf/setup-ew-cli@v1.0.0-rc01
+      uses: emulator-wtf/setup-ew-cli@v1.0.0-rc02
       with:
         version: ${{ inputs.version }}
     - name: Run instrumented tests
