@@ -63,6 +63,7 @@ jobs:
 | `side-effects`                 | Whether the test has any side effects, like hitting external APIs. Prevents any test caching and retries.                                                                    |
 | `num-balanced-shards`          | Set to a number larger than 1 to split your tests into multiple shards based on test execution time to be executed in parallel                                               |
 | `shard-target-runtime`         | Target a specific runtime (in minutes), this will spawn as many shards as needed to hit the target runtime.                                                                  |
+| `testcase-duration-hint`       | Hint the average runtime for each test case with a duration (e.g. 10s or 150ms). Defaults to 10s. Used when historical runtime data is missing.                              |
 | `num-uniform-shards`           | Set to a number larger than 1 to randomly split your tests into multiple shards to be executed in parallel                                                                   |
 | `num-shards`                   | Set to a number larger than 1 to split your tests into multiple shards based on test counts to be executed in parallel                                                       |
 | `record-video`                 | Set to true to record a video of the test run. Defaults to false.                                                                                                            |
