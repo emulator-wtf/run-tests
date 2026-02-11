@@ -6,7 +6,7 @@ inputs:
   version:
     description: 'ew-cli version to use'
     required: true
-    default: '1.0.0-rc01'
+    default: '1.1.0'
   # Authentication
   api-token:
     description: 'Api token for emulator.wtf'
@@ -77,6 +77,9 @@ inputs:
   shard-target-runtime:
     description: 'Target runtime for each shard in minutes, tests will be split into shards targeting this runtime for each shard based on historical data on a best effort basis.'
     required: false
+  testcase-duration-hint:
+    description: 'Hint for the average runtime for each test case expressed by a number followed by a unit (h, m, s or ms), with the maximum value being 3h and the minimum value being 1ms (default 10s). Useful when historical runtime data is missing for tests alongside with --shard-target-runtime.'
+    required: false
   num-uniform-shards:
     description: 'Set to a number larger than 1 to randomly split your tests into multiple shards.'
     required: false
@@ -136,11 +139,11 @@ runs:
   using: composite
   steps:
     - name: Setup ew-cli
-      uses: emulator-wtf/setup-ew-cli@v1.0.0-rc01
+      uses: emulator-wtf/setup-ew-cli@v1.0.0-rc02
       with:
         version: ${{ inputs.version }}
     - name: Run instrumented tests
-      uses: emulator-wtf/invoke@v1.0.0-rc01
+      uses: emulator-wtf/invoke@v1.0.0-rc02
       with:
         # Authentication
         api-token: ${{ inputs.api-token }}
@@ -168,6 +171,7 @@ runs:
         # Test Sharding
         shard-target-runtime: ${{ inputs.shard-target-runtime }}
         num-balanced-shards: ${{ inputs.num-balanced-shards }}
+        testcase-duration-hint: ${{ inputs.testcase-duration-hint }}
         num-uniform-shards: ${{ inputs.num-uniform-shards }}
         num-shards: ${{ inputs.num-shards }}
         # Test outputs
