@@ -1,7 +1,7 @@
 name: Test
 permissions:
   contents: read
-  id-token: write
+
 on:
   pull_request:
   push:
@@ -11,6 +11,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      # required for emulator-wtf/configure-credentials to mint an OIDC token
+      id-token: write
     steps:
     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       with:
