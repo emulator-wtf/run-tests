@@ -1,8 +1,9 @@
+---
 name: Test
 permissions:
   contents: read
 
-on:
+on:  # yamllint disable-line rule:truthy
   pull_request:
   push:
     branches:
@@ -15,16 +16,20 @@ jobs:
       # required for emulator-wtf/configure-credentials to mint an OIDC token
       id-token: write
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      with:
-        fetch-depth: 0
-        persist-credentials: false
-    - uses: emulator-wtf/configure-credentials@d0d840f8d9e2920e284788fcfa32f0a1eed95bf0 # v1.0.0
-      with:
-        oidc-configuration-id: ${{ vars.EW_OIDC_ID }}
-    - run: curl -o minimal.apk -sS https://maven.emulator.wtf/releases/wtf/emulator/minimal/0.0.2/minimal-0.0.2.apk 
-    - run: curl -o minimal-test.apk -sS https://maven.emulator.wtf/releases/wtf/emulator/minimal/0.0.2/minimal-0.0.2-test.apk 
-    - uses: ./
-      with: 
-        app: minimal.apk
-        test: minimal-test.apk
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: emulator-wtf/configure-credentials@d0d840f8d9e2920e284788fcfa32f0a1eed95bf0  # v1.0.0
+        with:
+          oidc-configuration-id: ${{ vars.EW_OIDC_ID }}
+      - run: >-
+          curl -o minimal.apk -sS
+          https://maven.emulator.wtf/releases/wtf/emulator/minimal/0.0.2/minimal-0.0.2.apk
+      - run: >-
+          curl -o minimal-test.apk -sS
+          https://maven.emulator.wtf/releases/wtf/emulator/minimal/0.0.2/minimal-0.0.2-test.apk
+      - uses: ./
+        with:
+          app: minimal.apk
+          test: minimal-test.apk

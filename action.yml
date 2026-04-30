@@ -1,3 +1,4 @@
+---
 name: 'Run Android instrumentation tests'
 author: 'emulator.wtf'
 description: 'Run tests with emulator.wtf'
@@ -25,10 +26,15 @@ inputs:
     description: 'Additional apks to install, one per line'
     required: false
   file-cache-ttl:
-    description: "Max time to keep cached files in the backend followed by a unit (d, h, m or s), with the maximum value being 90d and minimum value being 5m (default: 1h)"
+    description: >-
+      Max time to keep cached files in the backend followed by a unit
+      (d, h, m or s), with the maximum value being 90d and minimum value
+      being 5m (default: 1h)
     required: false
   file-cache:
-    description: "Set to false to disable remote file cache - APK and test-data will always be uploaded, even if they were uploaded before"
+    description: >-
+      Set to false to disable remote file cache - APK and test-data will
+      always be uploaded, even if they were uploaded before
     required: false
   # Test configuration
   display-name:
@@ -47,13 +53,20 @@ inputs:
     description: 'Set to true to clear app data between every test (only works with orchestrator)'
     required: false
   num-flaky-test-attempts:
-    description: "Number of times to re-run shards or jobs that had test failures. Repeat attempts will run in parallel. Default: 0."
+    description: >-
+      Number of times to re-run shards or jobs that had test failures.
+      Repeat attempts will run in parallel. Default: 0.
     required: false
   flaky-test-repeat-mode:
-    description: "Whether to repeat the whole failed shard (all) or only the failed tests (failed_only) in case of flaky tests. Default: failed_only."
+    description: >-
+      Whether to repeat the whole failed shard (all) or only the failed
+      tests (failed_only) in case of flaky tests. Default: failed_only.
     required: false
   timeout:
-    description: 'Max time until this test run is cancelled, expressed by a number followed by a unit (h, m or s), with the maximum value being 3h and minimum value being 60s (default: 15m)'
+    description: >-
+      Max time until this test run is cancelled, expressed by a number
+      followed by a unit (h, m or s), with the maximum value being 3h
+      and minimum value being 60s (default: 15m)
     required: false
   test-targets:
     description: 'Test targets to run, one operator-target per line, e.g. class foo.bar.Foobar'
@@ -62,20 +75,30 @@ inputs:
     description: 'Environment variables to pass to AndroidJUnitRunner, one per line in the form of key=value'
     required: false
   secret-environment-variables:
-    description: 'Secret environment variables to pass to AndroidJUnitRunner, one per line in the form of key=value. Use this for passing tokens, passwords, credentials, etc.'
+    description: >-
+      Secret environment variables to pass to AndroidJUnitRunner, one per
+      line in the form of key=value. Use this for passing tokens,
+      passwords, credentials, etc.
     required: false
   test-cache:
     description: "Set to false to disable remote test cache - tests will always re-run, even if they were run before"
     required: false
   side-effects:
-    description: "Indicates that the test run has side effects, i.e. it hits external resources and might be a part of a bigger test suite. Adding this flag means that the test will not be automatically retried in case of errors. Default: false."
+    description: >-
+      Indicates that the test run has side effects, i.e. it hits external
+      resources and might be a part of a bigger test suite. Adding this
+      flag means that the test will not be automatically retried in case
+      of errors. Default: false.
     required: false
   # Test sharding
   num-balanced-shards:
     description: 'Set to a number larger than 1 to split your tests into even shards based on historical runtime.'
     required: false
   shard-target-runtime:
-    description: 'Target runtime for each shard in minutes, tests will be split into shards targeting this runtime for each shard based on historical data on a best effort basis.'
+    description: >-
+      Target runtime for each shard in minutes, tests will be split into
+      shards targeting this runtime for each shard based on historical
+      data on a best effort basis.
     required: false
   num-uniform-shards:
     description: 'Set to a number larger than 1 to randomly split your tests into multiple shards.'
@@ -94,23 +117,36 @@ inputs:
     description: 'Directories to pull from device and store in <outputs-dir>, one per line'
     required: false
   outputs:
-    description: "Comma-separated list to specify what to download to output-dir. Defaults to merged_results_xml,coverage,pulled_dirs"
+    description: >-
+      Comma-separated list to specify what to download to output-dir.
+      Defaults to merged_results_xml,coverage,pulled_dirs
     required: false
   outputs-dir:
     description: 'Location to store test outputs in'
     required: false
   # Network options (emulator)
   dns-server:
-    description: 'DNS server(s) to use for the emulator, one per line. Can specify up to 4 servers. If not specified, the emulator will use default DNS servers.'
+    description: >-
+      DNS server(s) to use for the emulator, one per line. Can specify
+      up to 4 servers. If not specified, the emulator will use default
+      DNS servers.
     required: false
   dns-override:
-    description: 'Hard-code specific hostname-ip combinations, one per line in the form of hostname=ip (e.g. example.com=10.0.0.1)'
+    description: >-
+      Hard-code specific hostname-ip combinations, one per line in the
+      form of hostname=ip (e.g. example.com=10.0.0.1)
     required: false
   egress-tunnel:
-    description: 'Set to true to enable tunneling outgoing internet traffic from the emulator to the action. This will redirect all network traffic as if you were running the emulator within the action.'
+    description: >-
+      Set to true to enable tunneling outgoing internet traffic from the
+      emulator to the action. This will redirect all network traffic as
+      if you were running the emulator within the action.
     required: false
   egress-localhost-fwd-ip:
-    description: "When using the egress tunnel, make this action's localhost available to the emulator under the specified IP address (should NOT be a public IP, loopback IP or broadcast IP)"
+    description: >-
+      When using the egress tunnel, make this action's localhost
+      available to the emulator under the specified IP address (should
+      NOT be a public IP, loopback IP or broadcast IP)
     required: false
   # Network options (action)
   proxy-host:
@@ -127,7 +163,9 @@ inputs:
     required: false
   # Operation
   async:
-    description: "Run the test asynchronously, without waiting for the results. This shines when used together with GitHub integration."
+    description: >-
+      Run the test asynchronously, without waiting for the results.
+      This shines when used together with GitHub integration.
     required: false
 branding:
   color: orange
@@ -136,11 +174,11 @@ runs:
   using: composite
   steps:
     - name: Setup ew-cli
-      uses: emulator-wtf/setup-ew-cli@13b43792f7af98051e7dd29e626ec896822216b9 # v0.9.11
+      uses: emulator-wtf/setup-ew-cli@13b43792f7af98051e7dd29e626ec896822216b9  # v0.9.11
       with:
         version: ${{ inputs.version }}
     - name: Run instrumented tests
-      uses: emulator-wtf/invoke@ce6c40694d91267aaf2d03cad6cd641a6cd0917d # v0.9.8
+      uses: emulator-wtf/invoke@ce6c40694d91267aaf2d03cad6cd641a6cd0917d  # v0.9.8
       with:
         # Authentication
         api-token: ${{ inputs.api-token }}
