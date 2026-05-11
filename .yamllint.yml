@@ -2,7 +2,7 @@
 extends: default
 
 rules:
-  # SHA-pinned action references plus their version comment commonly
-  # exceed 80 columns and cannot be wrapped.
+  document-start:
+    present: false
   line-length:
     max: 120

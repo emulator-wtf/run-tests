@@ -20,7 +20,9 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - uses: emulator-wtf/configure-credentials@d0d840f8d9e2920e284788fcfa32f0a1eed95bf0  # v1.0.0
+      - uses: jdx/mise-action@v4.0.1 # zizmor: ignore[unpinned-uses] immutable tag
+      - run: mise lint
+      - uses: emulator-wtf/actions/configure-credentials@v1.0.0 # zizmor: ignore[unpinned-uses] immutable tag
         with:
           oidc-configuration-id: ${{ vars.EW_OIDC_ID }}
       - run: >-
