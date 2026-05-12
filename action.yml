@@ -170,13 +170,11 @@ branding:
 runs:
   using: composite
   steps:
-    - name: Setup ew-cli
-      uses: emulator-wtf/setup-ew-cli@12b25a7ce7e2cadd34d6150d8bc103cb25b68fef  # v1.0.0-rc02
-      with:
-        version: ${{ inputs.version }}
     - name: Run instrumented tests
-      uses: emulator-wtf/invoke@23e672bf91154f56e846a493e36558e5bf41cd9b  # v1.0.0-rc02
+      uses: emulator-wtf/actions/run-tests@42753a2a6bda2e657741a7385131bf61db464899  # v1.0.0
       with:
+        # ew-cli
+        version: ${{ inputs.version }}
         # Authentication
         api-token: ${{ inputs.api-token }}
         # File options
