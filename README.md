@@ -6,10 +6,21 @@ deliver quick feedback to your PRs.
 With this action you can easily run your Android instrumentation tests with
 [emulator.wtf](https://emulator.wtf).
 
+> [!WARNING]
+> The `emulator-wtf/run-tests` action has moved and is now at
+> `emulator-wtf/actions/run-tests`.
+>
+> ```patch
+> - uses: emulator-wtf/run-tests@v1
+> + uses: emulator-wtf/actions/run-tests@v1.0.0
+> ```
+>
+> We'll keep this action available as a redirect throughout the v1 series of releases.
+
 ## Quick example
 
 A really basic example building an app apk, test apk, running tests and then
-finally collecting the results with the `mikepenz/action-junit-report@v2`
+finally collecting the results with the `mikepenz/action-junit-report@v6`
 action:
 
 ```yaml
@@ -17,23 +28,27 @@ name: Run tests
 on: push
 jobs:
   run-tests:
-    runs-on: ubuntu-20.04
-  steps:
-    - uses: actions/checkout@v2
-    - name: Build app
-      run: ./gradlew assembleDebug assembleAndroidTest
-    - name: Run tests
-      uses: emulator-wtf/run-tests@v0
-      with:
-        api-token: ${{ secrets.EW_API_TOKEN }}
-        app: app/build/outputs/apk/debug/app-debug.apk
-        test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
-        outputs-dir: build/test-results
-    - name: Publish test report
-      uses: mikepenz/action-junit-report@v2
-      if: always() # always run even if the tests fail
-      with:
-        report_paths: 'build/test-results/**/*.xml'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: '25'
+      - name: Build app
+        run: ./gradlew assembleDebug assembleAndroidTest
+      - name: Run tests
+        uses: emulator-wtf/actions/run-tests@v1.0.0
+        with:
+          api-token: ${{ secrets.EW_API_TOKEN }}
+          app: app/build/outputs/apk/debug/app-debug.apk
+          test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
+          outputs-dir: build/test-results
+      - name: Publish test report
+        uses: mikepenz/action-junit-report@v6
+        if: always() # always run even if the tests fail
+        with:
+          report_paths: 'build/test-results/**/*.xml'
 ```
 
 ## Inputs
@@ -63,6 +78,7 @@ jobs:
 | `side-effects`                 | Whether the test has any side effects, like hitting external APIs. Prevents any test caching and retries.                                                                    |
 | `num-balanced-shards`          | Set to a number larger than 1 to split your tests into multiple shards based on test execution time to be executed in parallel                                               |
 | `shard-target-runtime`         | Target a specific runtime (in minutes), this will spawn as many shards as needed to hit the target runtime.                                                                  |
+| `testcase-duration-hint`       | Hint the average runtime for each test case with a duration (e.g. 10s or 150ms). Defaults to 10s. Used when historical runtime data is missing.                              |
 | `num-uniform-shards`           | Set to a number larger than 1 to randomly split your tests into multiple shards to be executed in parallel                                                                   |
 | `num-shards`                   | Set to a number larger than 1 to split your tests into multiple shards based on test counts to be executed in parallel                                                       |
 | `record-video`                 | Set to true to record a video of the test run. Defaults to false.                                                                                                            |
@@ -89,15 +105,15 @@ By default emulator.wtf runs tests on a Pixel2-like emulator with API 27
 can use the `devices` input to do so:
 
 ```yaml
-    - name: Run tests
-      uses: emulator-wtf/run-tests@v0
-      with:
-        api-token: ${{ secrets.EW_API_TOKEN }}
-        app: app/build/outputs/apk/debug/app-debug.apk
-        test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
-        devices: |
-          model=NexusLowRes,version=23
-          model=Pixel2,version=27
+      - name: Run tests
+        uses: emulator-wtf/actions/run-tests@v1.0.0
+        with:
+          api-token: ${{ secrets.EW_API_TOKEN }}
+          app: app/build/outputs/apk/debug/app-debug.apk
+          test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
+          devices: |
+            model=NexusLowRes,version=23
+            model=Pixel2,version=27
 ```
 
 ### Run tests with orchestrator while clearing package data
@@ -109,14 +125,14 @@ app persisted state between each run. Read more about orchestrator
 [here](https://developer.android.com/training/testing/junit-runner#using-android-test-orchestrator).
 
 ```yaml
-    - name: Run tests
-      uses: emulator-wtf/run-tests@v0
-      with:
-        api-token: ${{ secrets.EW_API_TOKEN }}
-        app: app/build/outputs/apk/debug/app-debug.apk
-        test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
-        use-orchestrator: true
-        clear-package-data: true
+      - name: Run tests
+        uses: emulator-wtf/actions/run-tests@v1.0.0
+        with:
+          api-token: ${{ secrets.EW_API_TOKEN }}
+          app: app/build/outputs/apk/debug/app-debug.apk
+          test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
+          use-orchestrator: true
+          clear-package-data: true
 ```
 
 ### Grab coverage data
@@ -126,14 +142,14 @@ results (one or more `.exec` or `.ec` files) in the path specified by
 `outputs-dir`:
 
 ```yaml
-    - name: Run tests
-      uses: emulator-wtf/run-tests@v0
-      with:
-        api-token: ${{ secrets.EW_API_TOKEN }}
-        app: app/build/outputs/apk/debug/app-debug.apk
-        test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
-        with-coverage: true
-        outputs-dir: build/test-results
+      - name: Run tests
+        uses: emulator-wtf/actions/run-tests@v1.0.0
+        with:
+          api-token: ${{ secrets.EW_API_TOKEN }}
+          app: app/build/outputs/apk/debug/app-debug.apk
+          test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
+          with-coverage: true
+          outputs-dir: build/test-results
 ```
 
 
@@ -143,12 +159,12 @@ The following example runs tests in parallel using 3 separate shards and stores
 the outputs from each shard in a separate folder under `build/test-results`:
 
 ```yaml
-    - name: Run tests
-      uses: emulator-wtf/run-tests@v0
-      with:
-        api-token: ${{ secrets.EW_API_TOKEN }}
-        app: app/build/outputs/apk/debug/app-debug.apk
-        test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
-        num-shards: 3
-        outputs-dir: build/test-results
+      - name: Run tests
+        uses: emulator-wtf/actions/run-tests@v1.0.0
+        with:
+          api-token: ${{ secrets.EW_API_TOKEN }}
+          app: app/build/outputs/apk/debug/app-debug.apk
+          test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
+          num-shards: 3
+          outputs-dir: build/test-results
 ```
