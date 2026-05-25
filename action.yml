@@ -171,7 +171,7 @@ runs:
   using: composite
   steps:
     - name: Run instrumented tests
-      uses: emulator-wtf/actions/run-tests@42753a2a6bda2e657741a7385131bf61db464899  # v1.0.0
+      uses: emulator-wtf/actions/run-tests@1a96fbe11f971a7f9da7d5e80eda476909224c78  # v1.0.1
       with:
         # ew-cli
         version: ${{ inputs.version }}
