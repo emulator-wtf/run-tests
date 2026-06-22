@@ -12,7 +12,7 @@ With this action you can easily run your Android instrumentation tests with
 >
 > ```patch
 > - uses: emulator-wtf/run-tests@v1
-> + uses: emulator-wtf/actions/run-tests@v1.0.0
+> + uses: emulator-wtf/actions/run-tests@v1.0.1
 > ```
 >
 > We'll keep this action available as a redirect throughout the v1 series of releases.
@@ -38,7 +38,7 @@ jobs:
       - name: Build app
         run: ./gradlew assembleDebug assembleAndroidTest
       - name: Run tests
-        uses: emulator-wtf/actions/run-tests@v1.0.0
+        uses: emulator-wtf/actions/run-tests@v1.0.1
         with:
           api-token: ${{ secrets.EW_API_TOKEN }}
           app: app/build/outputs/apk/debug/app-debug.apk
@@ -106,7 +106,7 @@ can use the `devices` input to do so:
 
 ```yaml
       - name: Run tests
-        uses: emulator-wtf/actions/run-tests@v1.0.0
+        uses: emulator-wtf/actions/run-tests@v1.0.1
         with:
           api-token: ${{ secrets.EW_API_TOKEN }}
           app: app/build/outputs/apk/debug/app-debug.apk
@@ -126,7 +126,7 @@ app persisted state between each run. Read more about orchestrator
 
 ```yaml
       - name: Run tests
-        uses: emulator-wtf/actions/run-tests@v1.0.0
+        uses: emulator-wtf/actions/run-tests@v1.0.1
         with:
           api-token: ${{ secrets.EW_API_TOKEN }}
           app: app/build/outputs/apk/debug/app-debug.apk
@@ -143,7 +143,7 @@ results (one or more `.exec` or `.ec` files) in the path specified by
 
 ```yaml
       - name: Run tests
-        uses: emulator-wtf/actions/run-tests@v1.0.0
+        uses: emulator-wtf/actions/run-tests@v1.0.1
         with:
           api-token: ${{ secrets.EW_API_TOKEN }}
           app: app/build/outputs/apk/debug/app-debug.apk
@@ -160,7 +160,7 @@ the outputs from each shard in a separate folder under `build/test-results`:
 
 ```yaml
       - name: Run tests
-        uses: emulator-wtf/actions/run-tests@v1.0.0
+        uses: emulator-wtf/actions/run-tests@v1.0.1
         with:
           api-token: ${{ secrets.EW_API_TOKEN }}
           app: app/build/outputs/apk/debug/app-debug.apk
