@@ -12,7 +12,7 @@ With this action you can easily run your Android instrumentation tests with
 >
 > ```patch
 > - uses: emulator-wtf/run-tests@v1
-> + uses: emulator-wtf/actions/run-tests@v1.0.1
+> + uses: emulator-wtf/actions/run-tests@v1.1.0
 > ```
 >
 > We'll keep this action available as a redirect throughout the v1 series of releases.
